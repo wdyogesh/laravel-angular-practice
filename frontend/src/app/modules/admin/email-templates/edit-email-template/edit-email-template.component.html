@@ -1,0 +1,99 @@
+<div class="content-wrapper">
+
+    <div class="page-header">
+
+        <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                <i class="mdi mdi-email"></i>
+            </span>
+            View Email Template
+        </h3>
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Dashboard</a></li>
+                <li class="breadcrumb-item"><a routerLink="/admin/email-templates">Email Templates</a></li>
+                <li class="breadcrumb-item">Edit Email Template</li>
+            </ol>
+        </nav>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+
+                    <p class="card-description">
+                        View Email Template
+                    </p>
+
+                    <form [formGroup]="editTemplateForm" (ngSubmit)="onSubmitForm(editTemplateForm.value)" class="form-horizontal" role="form">
+
+                        <div class="form-group" [ngClass]="{'has-error':editTemplateForm.get('subject').invalid && (editTemplateForm.get('subject').dirty || editTemplateForm.get('subject').touched)}">
+                            <label class="col-lg-3 control-label">Email Subject:<span class="text-danger">*</span></label>
+                            <div class="col-lg-8">
+                                <input formControlName="subject" class="form-control" type="text">
+                                <div *ngFor="let validation of validationMessages.subject">
+                                    <span class="help-block text-danger" *ngIf="editTemplateForm.get('subject').hasError(validation.type) && (editTemplateForm.get('subject').dirty || editTemplateForm.get('subject').touched)">{{validation.message}}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" [ngClass]="{'has-error':editTemplateForm.get('template').invalid && (editTemplateForm.get('template').dirty || editTemplateForm.get('template').touched)}">
+                            <label class="col-lg-3 control-label">Email Template Body:<span class="text-danger">*</span></label>
+                            <div class="col-lg-8">
+                                <ckeditor formControlName="template" name="editor1" skin="moono-lisa" language="en"></ckeditor>
+                                <div *ngFor="let validation of validationMessages.template">
+                                    <span class="help-block text-danger" *ngIf="editTemplateForm.get('template').hasError(validation.type) && (editTemplateForm.get('template').dirty || editTemplateForm.get('template').touched)">{{validation.message}}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Tag description:</label>
+                            <div class="col-md-8">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Tag</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngIf="!emailTemplate?.tag_desc">
+                                            <td colspan="2">
+                                                <h4 class="text-center">Tags not available.</h4>
+                                            </td>
+                                        </tr>
+                                        <ng-template [ngIf]="emailTemplate?.tag_desc">
+                                            <tr *ngFor="let item of emailTemplate.tag_desc">
+                                                <td>{{item.tag}}</td>
+                                                <td>{{item.desc}}</td>
+                                            </tr>
+                                        </ng-template>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label"></label>
+                            <div class="col-md-8">
+                                <input type="submit" class="btn btn-primary" value="Save Changes">
+                                <span></span>
+                                <button class="btn btn-default" routerLink="/admin/email-templates">Back</button>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+

@@ -1,0 +1,37 @@
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                <i class="mdi mdi-account-edit"></i>
+            </span>
+            Activate/Deactivate Modules
+        </h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">Modules</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body" *ngIf="modulesData.length !== 0">
+                    <h4 class="card-title">Activate/Deactivate Modules</h4>
+                    <form class="forms-sample" [formGroup]="modulesForm" (ngSubmit)="submit()">
+                        <div class="form-group">
+                            <div formArrayName="modules" class="form-check form-check-primary" *ngFor="let module of getModules(modulesForm); let i = index">
+                                <label class="form-check-label">
+                                    <input type="checkbox" [formControlName]="i" class="form-check-input">
+                                    {{modulesData[i].menu_title}}
+                                    <i class="input-helper"></i>
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-gradient-primary mr-2">Submit</button>
+                        <a routerLink="/superadmin" class="btn btn-light">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

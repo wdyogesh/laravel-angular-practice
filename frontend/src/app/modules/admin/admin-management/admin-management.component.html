@@ -1,0 +1,156 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<div class="content-wrapper">
+
+    <div class="page-header">
+
+        <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                <i class="mdi mdi-account-tie"></i>
+            </span>
+            Admin Management
+        </h3>
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Dashboard</a></li>
+                <li class="breadcrumb-item">Admin Management</li>
+            </ol>
+        </nav>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-description form-inline">
+                        Manage Admins
+                        <label class="sr-only">Search by Status :</label>
+                        <select class="form-control ml-5 mr-sm-2 " [(ngModel)]="search.by_status">
+                            <option value="">---Search by Status---</option>
+                            <option value="">Any</option>
+                            <option value="1">Active</option>
+                            <option value="0">Inactive</option>
+                        </select>
+                        <input placeholder="Search by text" type="text" name="" class="form-control ml-3 mr-sm-2" [(ngModel)]="search.by_text" (keyup.enter)="searchFun()">
+                        <button type="submit" class="btn btn-gradient-primary" (click)="searchFun()">Search</button>
+                    </div>
+                    <table class="table table-hover" [mfData]="adminData" #mf="mfDataTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    User
+                                </th>
+                                <th>
+                                    <mfDefaultSorter by="first_name"><i class="mdi mdi-arrow-up-down"></i> Name</mfDefaultSorter>
+                                </th>
+                                <th>
+                                    <mfDefaultSorter by="email"><i class="mdi mdi-arrow-up-down"></i> Email</mfDefaultSorter>
+                                </th>
+                                <!-- <th>
+                                    <mfDefaultSorter by="is_active"><i class="mdi mdi-arrow-up-down"></i> Status</mfDefaultSorter>
+                                </th> -->
+                                <th>
+                                    <mfDefaultSorter by="mobile"><i class="mdi mdi-arrow-up-down"></i> Mobile</mfDefaultSorter>
+                                </th>
+                                <th>
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="mf.data.length == 0">
+                                <td>No admins found</td>
+                            </tr>
+                            <tr *ngFor = "let data of mf.data" [ngClass]="{'table-danger':(data.is_active==0)}">
+                                <td class="py-1">
+                                    <ng-template [ngIf]="data.image !== null">
+                                        <img src="{{image + '/' + data.image}}" alt="image"/>
+                                    </ng-template>
+                                    <ng-template [ngIf]="data.image === null">
+                                        <img src="assets/images/placeholder.jpg" alt="image"/>
+                                    </ng-template>
+                                </td>
+                                <td>
+                                    {{data.first_name}} {{ data.last_name }}
+                                </td>
+                                <td>
+                                    {{data.email}}
+                                </td>
+                                <!-- <td>
+                                    <ng-template [ngIf]="(data.is_active==1)">
+                                        <label class="badge badge-success">Active</label>
+                                    </ng-template>
+                                    <ng-template [ngIf]="(data.is_active==0)">
+                                        <label class="badge badge-danger">Inactive</label>
+                                    </ng-template>
+                                </td> -->
+                                <td>
+                                    +{{ data.mobile_code['phonecode'] }}-{{ data.mobile }}
+                                </td>
+                                <td>
+                                    <ng-template [ngIf]="(data.is_active==1)">
+                                        <a style="cursor: pointer" title="Click here to Deactivate User" (click)="confirmDeactivate(data.id)"><i class="mdi mdi-toggle-switch icon-md"></i></a>&nbsp;&nbsp;
+                                    </ng-template>
+                                    <ng-template [ngIf]="(data.is_active==0)">
+                                        <a style="cursor: pointer" title="Click here to Activate User" (click)="confirmActivate(data.id)"><i class="mdi mdi-toggle-switch-off icon-md"></i></a>&nbsp;&nbsp;
+                                    </ng-template>
+                                    <a title="Click here to Edit User" routerLink="edit/{{ data.id }}"><i class="mdi mdi-account-edit icon-md"></i></a>&nbsp;&nbsp;
+                                    <a style="cursor: pointer" title="Change Password" data-toggle="modal" data-target="#admin_mgmt_change_password" (click)="assignUserId(data.id)"><i class="mdi mdi-lock icon-md" aria-hidden="true"></i></a>&nbsp;&nbsp;
+                                    <a style="cursor: pointer" title="Click here to Delete User" (click)="confirmDeleteUser(data.id)"><i class="mdi mdi-delete icon-md"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="6" align="center">
+                                    <p-paginator [rows]="search.rows" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,20,30]" (onPageChange)="paginate($event)"></p-paginator>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="admin_mgmt_change_password" class="modal fade" role="dialog" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <!-- Modal content-->
+            <div class="modal-content" style="top: 50px;">
+                <div class="modal-header">
+                    <h4 class="modal-title">Change Password</h4>
+                    <button #closeBtn type="button" class="close" data-dismiss="modal" (click)="resetForm('changePasswordForm')">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <form autocomplete="off" [formGroup]="changePasswordForm" (ngSubmit)="doChangePassword()" class="form-horizontal">
+                            <input formControlName="id" autocomplete="false" name="hidden" type="hidden">
+                            <div class="form-group">
+                                <label for="fname">New Password<span class="text-danger">*</span></label>
+                                <input autocomplete="false" formControlName="password" type="password" class="form-control"/>
+                                <div *ngFor="let validation of validationMessages.password">
+                                    <span class="help-block text-danger" *ngIf="changePasswordForm.get('password').hasError(validation.type) && (changePasswordForm.get('password').dirty || changePasswordForm.get('password').touched)">{{validation.message}}</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fname">Confirm New Password<span class="text-danger">*</span></label>
+                                <input autocomplete="false" formControlName="password_confirmation" type="password" class="form-control"/>
+                                <div *ngFor="let validation of validationMessages.password_confirmation">
+                                    <span class="help-block text-danger" *ngIf="changePasswordForm.get('password_confirmation').hasError(validation.type) && (changePasswordForm.get('password_confirmation').dirty || changePasswordForm.get('password_confirmation').touched)">{{validation.message}}</span>
+                                </div>
+                                <span class="help-block text-danger" *ngIf="changePasswordForm.value['password'] !== changePasswordForm.value['password_confirmation'] && (changePasswordForm.get('password_confirmation').touched)">Password not matched</span>
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

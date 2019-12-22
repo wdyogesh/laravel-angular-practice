@@ -1,0 +1,87 @@
+<div class="content-wrapper">
+
+    <div class="page-header">
+        <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                <i class="mdi mdi-account-tie"></i>
+            </span>
+            Edit Admin Details
+        </h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Dashboard</a></li>
+                <li class="breadcrumb-item"><a routerLink="/admin/admin-management">Admin Management</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit Admin</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 grid-margin stretch-card">
+            <div class="card">
+                <div class="form-horizontal text-center">
+                    <img title="Profile Picture" src="{{ image }}" class="avatar img-circle" alt="avatar">
+                    <h6>Upload a different photo...</h6>
+                    <div class="form-group">
+                        <input #myfile type="file" class="file-upload-browse" name="myfile"
+                                (change)="handleFileInput($event.target.files)" accept="image/*">
+                    </div>
+                    <div class="form-group has-error">
+                        <span class="help-block text-danger" *ngIf="fileError">{{fileError}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body" *ngIf="adminData && phoneCodeList">
+                    <h4 class="card-title">Edit {{ adminData.first_name }}'s details</h4>
+                    <form [formGroup]="editAdminForm" (ngSubmit)="onSubmitForm()" class="forms-sample">
+                        <div class="form-group">
+                            <label for="first_name">First Name</label>
+                            <input type="text" formControlName="first_name" class="form-control" id="first_name" placeholder="First Name">
+                            <div *ngFor="let validation of validationMessages.first_name">
+                                <span class="help-block text-danger" *ngIf="editAdminForm.get('first_name').hasError(validation.type)">{{validation.message}}</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name">Last Name</label>
+                            <input type="text" formControlName="last_name" class="form-control" id="last_name" placeholder="First Name">
+                            <div *ngFor="let validation of validationMessages.last_name">
+                                <span class="help-block text-danger" *ngIf="editAdminForm.get('last_name').hasError(validation.type)">{{validation.message}}</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" formControlName="email" class="form-control" id="email" placeholder="Email">
+                            <div *ngFor="let validation of validationMessages.email">
+                                <span class="help-block text-danger" *ngIf="editAdminForm.get('email').hasError(validation.type)">{{validation.message}}</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobile_code">Mobile Code:</label>
+                            <select formControlName="mobile_code" id="mobile_code" class="form-control form-control-sm">
+                                <option value="">Please Select</option>
+                                <option *ngFor="let code of phoneCodeList" value="{{code.id}}">+{{code.phonecode}}({{code.iso}})</option>
+                            </select>
+                            <div *ngFor="let validation of validationMessages.mobile_code">
+                                <span class="help-block text-danger" *ngIf="editAdminForm.get('mobile_code').hasError(validation.type) && (editAdminForm.get('mobile_code').dirty || editAdminForm.get('mobile_code').touched)">{{validation.message}}</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobile">Mobile</label>
+                            <input type="tel" formControlName="mobile" class="form-control" id="mobile" placeholder="Mobile">
+                            <div *ngFor="let validation of validationMessages.mobile">
+                                <span class="help-block text-danger" *ngIf="editAdminForm.get('mobile').hasError(validation.type)">{{validation.message}}</span>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-gradient-primary mr-2">Submit</button>
+                        <a routerLink="/admin/admin-management" class="btn btn-light">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

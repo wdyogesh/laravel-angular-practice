@@ -1,0 +1,89 @@
+<div class="container-scroller admin">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="content-wrapper d-flex align-items-center auth">
+            <div class="row w-100">
+                <div class="col-lg-4 mx-auto">
+                    <div class="auth-form-light text-left p-5">
+
+                        <div class="brand-logo">
+                            <img src="assets/images/logo.svg">
+                        </div>
+
+                        <h4>New here?</h4>
+
+                        <h6 class="font-weight-light">Signing up is easy. It only takes a few steps</h6>
+
+                        <form [formGroup]="signupForm" (ngSubmit)="onSignupSubmit(signupForm.value)" class="pt-3">
+
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-lg" formControlName="first_name" id="first_name" placeholder="First Name">
+
+                                <div *ngFor="let validation of validationMessages.first_name">
+                                    <span class="help-block pull-left text-danger" *ngIf="signupForm.get('first_name').hasError(validation.type) && (signupForm.get('first_name').dirty || signupForm.get('first_name').touched)">{{validation.message}}</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-lg" formControlName="last_name" id="last_name" placeholder="Last Name">
+
+                                <div *ngFor="let validation of validationMessages.last_name">
+                                    <span class="help-block pull-left text-danger" *ngIf="signupForm.get('last_name').hasError(validation.type) && (signupForm.get('last_name').dirty || signupForm.get('last_name').touched)">{{validation.message}}</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="email" class="form-control form-control-lg" formControlName="email" id="email" placeholder="Email">
+                                <div *ngFor="let validation of validationMessages.email">
+                                    <span class="help-block pull-left text-danger" *ngIf="signupForm.get('email').hasError(validation.type) && (signupForm.get('email').dirty || signupForm.get('email').touched)">{{validation.message}}</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <select formControlName="mobile_code" id="mobile_code" class="form-control form-control-lg">
+                                    <option value="">Mobile Code</option>
+                                    <option *ngFor="let code of phoneCodeList" value="{{code.id}}">+{{code.phonecode}}({{code.iso}})</option>
+                                </select>
+                                <div *ngFor="let validation of validationMessages.mobile_code">
+                                    <span class="help-block text-danger" *ngIf="signupForm.get('mobile_code').hasError(validation.type) && (signupForm.get('mobile_code').dirty || signupForm.get('mobile_code').touched)">{{validation.message}}</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="tel" formControlName="mobile" class="form-control form-control-lg" id="mobile" placeholder="Mobile">
+                                <div *ngFor="let validation of validationMessages.mobile">
+                                    <span class="help-block pull-left text-danger" *ngIf="signupForm.get('mobile').hasError(validation.type) && (signupForm.get('mobile').dirty || signupForm.get('mobile').touched)">{{validation.message}}</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="password" class="form-control form-control-lg" formControlName="password" id="exampleInputPassword1" placeholder="Password">
+
+                                <div *ngFor="let validation of validationMessages.password">
+                                    <span class="help-block pull-left text-danger" *ngIf="signupForm.get('password').hasError(validation.type) && (signupForm.get('password').dirty || signupForm.get('password').touched)">{{validation.message}}</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="password" class="form-control form-control-lg" formControlName="password_confirmation" id="confirmPassword" placeholder="Confirm Password">
+
+                                <div *ngFor="let validation of validationMessages.password_confirmation">
+                                    <span class="help-block pull-left text-danger" *ngIf="signupForm.get('password_confirmation').hasError(validation.type) && (signupForm.get('password_confirmation').dirty || signupForm.get('password_confirmation').touched)">{{validation.message}}</span>
+                                </div>
+                            </div>
+
+                            <div class="mt-3">
+                                <button class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" type="submit">SIGN UP</button>
+                            </div>
+
+                            <div class="text-center mt-4 font-weight-light">
+                                Already have an account? <a routerLink="/login" class="text-primary">Login</a>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,77 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<div class="content-wrapper">
+
+    <div class="page-header">
+
+        <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                <i class="mdi mdi-code-braces"></i>
+            </span>
+            View Api Keys
+        </h3>
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Dashboard</a></li>
+                <li class="breadcrumb-item"><a routerLink="/admin/api-management">Api Management</a></li>
+                <li class="breadcrumb-item">View Api Keys</li>
+            </ol>
+        </nav>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-description">
+                        View Api Keys
+                    </p>
+                    <table class="table table-hover mb-3">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Id
+                                </th>
+                                <th>
+                                    Key Title
+                                </th>
+                                <th>
+                                    Key Value
+                                </th>
+                                <th>
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="keysData.length == 0">
+                                <td>No keys found</td>
+                            </tr>
+                            <tr *ngFor="let key of keysData">
+                                <td>
+                                    {{ key.id }}
+                                </td>
+                                <td>
+                                    {{ key.key_title }}
+                                </td>
+                                <td>
+                                    {{ key.key_value }}
+                                </td>
+                                <td>
+                                    <a style="cursor: pointer" title="Click here to Delete API key"
+                                        (click)="confirmDeleteKey(key.id)"><i class="mdi mdi-delete icon-md"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="card-description">
+                        <a routerLink="/admin/api-management" class="btn btn-primary">Back</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

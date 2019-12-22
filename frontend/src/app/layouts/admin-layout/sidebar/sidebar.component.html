@@ -1,0 +1,37 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar" aria-labelledby="sidebar">
+    <ul class="nav">
+
+        <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" routerLink="dashboard">
+                <span class="menu-title">Dashboard</span>
+                <i class="mdi mdi-home menu-icon"></i>
+            </a>
+        </li>
+
+        <li *ngFor="let route of routes" class="nav-item" routerLinkActive="active">
+            <ng-template [ngIf]="route.children.length === 0">
+                <a class="nav-link" routerLink="{{route.route}}">
+                    <span class="menu-title">{{route.menu_title}}</span>
+                    <i class="mdi mdi-{{route.icon}} menu-icon"></i>
+                </a>
+            </ng-template>
+
+            <ng-template [ngIf]="route.children.length > 0">
+                <a class="nav-link" data-toggle="collapse" href="#{{route.route}}" aria-expanded="false" aria-controls="getId(route)">
+                    <span class="menu-title">{{route.menu_title}}</span>
+                    <i class="menu-arrow"></i>
+                    <i class="mdi mdi-{{route.icon}} menu-icon"></i>
+                </a>
+                <div class="collapse" id="{{route.route}}">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item" *ngFor="let child of route.children">
+                            <a class="nav-link" routerLink="{{child.route}}">{{child.menu_title}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </ng-template>
+
+        </li>
+
+    </ul>
+</nav>

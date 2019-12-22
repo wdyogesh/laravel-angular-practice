@@ -1,0 +1,87 @@
+<div class="content-wrapper">
+
+    <div class="page-header">
+        <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                <i class="mdi mdi-account-tie"></i>
+            </span>
+            Add Admin
+        </h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Dashboard</a></li>
+                <li class="breadcrumb-item"><a routerLink="/admin/admin-management">Admin Management</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Add Admin</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Add New Admin</h4>
+                    <form [formGroup]="addAdminForm" (ngSubmit)="onSubmitForm()" class="forms-sample">
+                        <div class="form-group">
+                            <label for="first_name">First Name</label>
+                            <input type="text" formControlName="first_name" class="form-control" id="first_name" placeholder="First Name">
+                            <div *ngFor="let validation of validationMessages.first_name">
+                                <span class="help-block text-danger" *ngIf="addAdminForm.get('first_name').hasError(validation.type) && (addAdminForm.get('first_name').dirty || addAdminForm.get('first_name').touched)">{{validation.message}}</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name">Last Name</label>
+                            <input type="text" formControlName="last_name" class="form-control" id="last_name" placeholder="First Name">
+                            <div *ngFor="let validation of validationMessages.last_name">
+                                <span class="help-block text-danger" *ngIf="addAdminForm.get('last_name').hasError(validation.type) && (addAdminForm.get('last_name').dirty || addAdminForm.get('last_name').touched)">{{validation.message}}</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" formControlName="email" class="form-control" id="email" placeholder="Email">
+                            <div *ngFor="let validation of validationMessages.email">
+                                <span class="help-block text-danger" *ngIf="addAdminForm.get('email').hasError(validation.type) && (addAdminForm.get('email').dirty || addAdminForm.get('email').touched)">{{validation.message}}</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobile_code">Mobile Code:</label>
+                            <select formControlName="mobile_code" id="mobile_code" class="form-control form-control-sm">
+                                <option value="">Please Select</option>
+                                <option *ngFor="let code of phoneCodeList" value="{{code.id}}">+{{code.phonecode}}({{code.iso}})</option>
+                            </select>
+                            <div *ngFor="let validation of validationMessages.mobile_code">
+                                <span class="help-block text-danger" *ngIf="addAdminForm.get('mobile_code').hasError(validation.type) && (addAdminForm.get('mobile_code').dirty || addAdminForm.get('mobile_code').touched)">{{validation.message}}</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobile">Mobile</label>
+                            <input type="tel" formControlName="mobile" class="form-control" id="mobile" placeholder="Mobile">
+                            <div *ngFor="let validation of validationMessages.mobile">
+                                <span class="help-block text-danger" *ngIf="addAdminForm.get('mobile').hasError(validation.type) && (addAdminForm.get('mobile').dirty || addAdminForm.get('mobile').touched)">{{validation.message}}</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" formControlName="password" class="form-control" id="password" placeholder="Password">
+                            <div *ngFor="let validation of validationMessages.password">
+                                <span class="help-block text-danger" *ngIf="addAdminForm.get('password').hasError(validation.type) && (addAdminForm.get('password').dirty || addAdminForm.get('password').touched)">{{validation.message}}</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password_confirmation">Confirm Password</label>
+                            <input type="password" formControlName="password_confirmation" class="form-control" id="password_confirmation" placeholder="Confirm Password">
+                            <div *ngFor="let validation of validationMessages.password_confirmation">
+                                <span class="help-block text-danger" *ngIf="addAdminForm.get('password_confirmation').hasError(validation.type) && (addAdminForm.get('password_confirmation').dirty || addAdminForm.get('password_confirmation').touched)">{{validation.message}}</span>
+                            </div>
+                            <span class="help-block text-danger" *ngIf="addAdminForm.value['password'] !== addAdminForm.value['password_confirmation'] && (addAdminForm.get('password_confirmation').touched)">Password not matched</span>
+                        </div>
+                        <button type="submit" class="btn btn-gradient-primary mr-2">Submit</button>
+                        <a routerLink="/admin/admin-management" class="btn btn-light">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

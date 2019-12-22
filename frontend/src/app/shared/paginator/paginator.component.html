@@ -1,0 +1,11 @@
+<ul class="pagination" *ngIf="pagination.paginate.length > 1">
+    <li *ngIf="pagination.page_no > pagination.to" (click)="paginate(pagination.page_no, '-')" 
+        style="padding: 3px 10px; font-weight: 600"><a href="javascript:void(0)"><i class="fa fa-chevron-left"></i></a></li>
+    <span *ngFor="let page of pagination.paginate">
+    <li *ngIf="page >= pagination.page_no-5 && page <= pagination.page_no+5" style="padding: 3px 10px; font-weight: 600" [ngClass]="{'active_page':(pagination.page_no === page)}" (click)="paginate(pagination.page_no=page, '')">
+        <a [ngClass]="{'active_page':(pagination.page_no === page)}" href="javascript:void(0)">{{page}}</a>
+    </li>
+    </span>
+    <li *ngIf="pagination.page_no < pagination.last_page" (click)="paginate(pagination.page_no,'+')"
+        style="padding: 3px 10px; font-weight: 600"><a href="javascript:void(0)"><i class="fa fa-chevron-right"></i></a></li>
+</ul>

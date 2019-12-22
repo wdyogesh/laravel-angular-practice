@@ -1,0 +1,74 @@
+<div class="content-wrapper">
+
+    <div class="page-header">
+
+        <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                <i class="mdi mdi-code-braces"></i>
+            </span>
+            Add Api Key
+        </h3>
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Dashboard</a></li>
+                <li class="breadcrumb-item"><a routerLink="/admin/api-management">API Management</a></li>
+                <li class="breadcrumb-item">Add New Api Key</li>
+            </ol>
+        </nav>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+
+                    <p class="card-description">
+                        Add New API Key
+                    </p>
+
+                    <form [formGroup]="apiKeyForm" (ngSubmit)="onSubmit(apiKeyForm.value)">
+                        <div formArrayName="keys" *ngFor="let key of getKey(apiKeyForm); let i = index">
+                            <div [formGroupName]="i" class="form-inline" style="margin-bottom:30px">
+                                <div>
+                                    <label class="sr-only" for="key_title">Key Title:<span class="text-danger">*</span></label>
+                                    <input id="key_title" formControlName='key_title' type="text" class="form-control mb-2 mr-sm-2" placeholder="Key Title">
+                                    <div *ngFor="let validation of validationMessages.key_title">
+                                        <span class="help-block text-danger" *ngIf="key.get('key_title').hasError(validation.type) && (key.get('key_title').dirty || key.get('key_title').touched)">{{validation.message}}</span>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="sr-only" for="key_value">Key Value:<span class="text-danger">*</span></label>
+                                    <input id="key_value" formControlName='key_value' type="text" class="form-control mb-2 mr-sm-2" placeholder="Key Value">
+                                    <div *ngFor="let validation of validationMessages.key_value">
+                                        <span class="help-block text-danger" *ngIf="key.get('key_value').hasError(validation.type) && (key.get('key_value').dirty || key.get('key_value').touched)">{{validation.message}}</span>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <button type="button" class="btn btn-danger btn-sm mb-2" (click)="remove(i)">Remove</button>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-default" type="button" (click)="addNext()">Add Another Key</button>
+                            &nbsp;
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            &nbsp;
+                            <a class="btn btn-default" routerLink="/admin/api-management">Back</a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+

@@ -1,0 +1,70 @@
+<div class="content-wrapper">
+
+    <div class="page-header">
+
+        <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                <i class="mdi mdi-database-check"></i>
+            </span>
+            Edit CMS Data
+        </h3>
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Dashboard</a></li>
+                <li class="breadcrumb-item"><a routerLink="/admin/cms">CMS</a></li>
+                <li class="breadcrumb-item">Edit CMS Data</li>
+            </ol>
+        </nav>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+
+                    <p class="card-description">
+                        Edit CMS Data
+                    </p>
+
+                    <form [formGroup]="editCmsForm" (ngSubmit)="onSubmitForm(editCmsForm.value)" class="form-horizontal">
+
+                        <div class="form-group" [ngClass]="{'has-error':editCmsForm.get('display_title').invalid && (editCmsForm.get('display_title').dirty || editCmsForm.get('display_title').touched)}">
+                            <label >Display Title:<span class="text-danger">*</span></label>
+
+                            <input class="form-control" formControlName="display_title" type="text">
+                            <div *ngFor="let validation of validationMessages.display_title">
+                                <span class="help-block text-danger" *ngIf="editCmsForm.get('display_title').hasError(validation.type)">{{validation.message}}</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" [ngClass]="{'has-error':editCmsForm.get('content').invalid && (editCmsForm.get('content').dirty || editCmsForm.get('content').touched)}">
+                            <label>Content:<span class="text-danger">*</span></label>
+                            <ckeditor name="editor1" formControlName="content" skin="moono-lisa" language="en" ></ckeditor>
+
+                            <div *ngFor="let validation of validationMessages.content">
+                                <span class="help-block text-danger" *ngIf="editCmsForm.get('content').hasError(validation.type)">{{validation.message}}</span>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label></label>
+                                <button type="submit" class="btn btn-primary">Update</button>
+                                <!-- <button *ngIf="blocked" class="btn btn-primary" disabled>Processing</button> -->
+                                &nbsp;
+                                <a class="btn btn-default" routerLink="/admin/cms">Back</a>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+

@@ -1,0 +1,66 @@
+<div class="content-wrapper">
+
+    <div class="page-header">
+
+        <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                <i class="mdi mdi-database-check"></i>
+            </span>
+            CMS
+        </h3>
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Dashboard</a></li>
+                <li class="breadcrumb-item">CMS</li>
+            </ol>
+        </nav>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-description">
+                        CMS
+                    </p>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Title
+                                </th>
+                                <th>
+                                    Content
+                                </th>
+                                <th>
+                                    Flag
+                                </th>
+                                <th>
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-template [ngIf]="(cmsList.length == 0)">
+                                <tr class="text-center">
+                                    <td colspan="3">No record found</td>
+                                </tr>
+                            </ng-template>
+                            <tr *ngFor = "let cms of cmsList">
+                                <td>{{ cms.display_title }}</td>
+                                <td>{{ cms.content }}</td>
+                                <td>{{ cms.flag }}</td>
+                                <td>
+                                    <a title="Edit CMS Content" routerLink="edit/{{ cms.id }}"><i class="mdi mdi-content-save-edit icon-md"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
